@@ -1,5 +1,8 @@
 // Import Bulma's core
 @import "~bulma/sass/utilities/_all";
+@import "~assets/css/my-custom.css";
+@import "https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css";
+@import "https://unicons.iconscout.com/release/v2.1.11/css/unicons.css";
 
 // Set your colors
 $primary: darkgreen;
@@ -76,6 +79,7 @@ $colors: mergeColorMaps(
 $link: $primary;
 $link-invert: $primary-invert;
 $link-focus-border: $primary;
+
 
 // Import Bulma and Buefy styles
 @import "~bulma";

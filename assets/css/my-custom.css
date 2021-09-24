@@ -1,0 +1,9 @@
+.sezione-rimborsi{
+    padding: 1rem;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+
+.my-bottoni-centrali{
+    justify-content: center!important;
+}
