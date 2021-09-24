@@ -115,8 +115,11 @@
           </div>
       </div>
 
+      <div v-if="error">
+        <span class="has-text-danger">{{messaggioErrore}}</span>
+      </div>
       <div v-if="writeSuccessful">
-        <span >Grazie per aver compilato la richiesta.</span>
+        <span>Grazie per aver compilato la richiesta.</span>
       </div>
 
     </section>
@@ -129,6 +132,8 @@
     data() {
       return {
         writeSuccessful: false,
+        error: false,
+        messaggioErrore: '',
         radio: '',
         nome: '',
             cognome: '',
@@ -138,20 +143,27 @@
     },
     methods: {
       async writeToFirestore() {
-                
-        let insertok = await fireDb.collection("richieste").add({
-            motivo_rimborso: this.radio,
-            nome: this.nome,
-            cognome: this.cognome,
-            email: this.email,
-            n_ordine: this.n_ordine
-        });
+        
+        if ((this.nome && this.cognome && this.n_ordine && this.email && this.motivo_rimborso) != '') {
+          this.error = false;
+          this.messaggioErrore = '';
+          let insertok = await fireDb.collection("richieste").add({
+              motivo_rimborso: this.radio,
+              nome: this.nome,
+              cognome: this.cognome,
+              email: this.email,
+              n_ordine: this.n_ordine
+          });
 
-        if (insertok){
-          alert("Segnalazione inserita con successo!");
-          this.writeSuccessful = true;
+          if (insertok){
+            alert("Segnalazione inserita con successo!");
+            this.writeSuccessful = true;
+          }
         }
-
+        else{
+          this.error = true;
+          this.messaggioErrore = 'Compila tutti i campi!';
+        }
         // try {
         //   await ref.set(document)
         // } catch (e) {
