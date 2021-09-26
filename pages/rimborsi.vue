@@ -15,12 +15,14 @@
     </section>
 
     <section class="sezione-rimborsi">
+      <form :class="this.formErrore ? 'formErrore' : false">
+
       <div class="field is-horizontal">
         <div class="field-body">
           <div class="field">
             <label class="label">Nome</label>
             <p class="control is-expanded has-icons-left">
-              <input class="input" type="text" placeholder="Nome" v-model="nome">
+              <input class="input" type="text" placeholder="Nome" v-model="nome" required @invalid="invalidateForm">
               <b-icon
                 icon="apps"
               />&nbsp; 
@@ -29,7 +31,7 @@
           <div class="field">
             <label class="label">Cognome</label>
             <p class="control is-expanded has-icons-left has-icons-right">
-              <input class="input" type="text" placeholder="Cognome" v-model="cognome">
+              <input class="input" type="text" placeholder="Cognome" v-model="cognome" required @invalid="invalidateForm">
               <span class="icon is-small is-left">
                 <b-icon
                 icon="apps"
@@ -45,7 +47,7 @@
           <div class="field">
             <label class="label">Numero ordine</label>
             <p class="control is-expanded has-icons-left">
-              <input class="input" type="text" placeholder="numero ordine" v-model="n_ordine">
+              <input class="input" type="text" placeholder="numero ordine" v-model="n_ordine" required @invalid="invalidateForm">
               <span class="icon is-small is-left">
                 <b-icon
                 icon="filter"
@@ -56,7 +58,7 @@
           <div class="field">
             <label class="label">Indirizzo E-mail</label>
             <p class="control is-expanded has-icons-left has-icons-right">
-              <input class="input" type="email" placeholder="Email" v-model="email">
+              <input class="input" type="email" placeholder="Email" v-model="email" required @invalid="invalidateForm">
               <span class="icon is-small is-left">
                 <b-icon
                 icon="mail"
@@ -108,10 +110,10 @@
 <hr>
         <div class="field is-grouped my-bottoni-centrali">
           <div class="control has-text-centered">
-            <input class="button is-primary" type="submit" value="Invia" @click="writeToFirestore" :disabled="writeSuccessful">
+            <input class="button is-primary" type="submit" value="Invia" @click="writeToFirestore">
           </div>
           <div class="control has-text-centered">
-            <input class="button is-danger" type="reset" value="Cancella">
+            <input class="button is-danger" type="reset" value="Cancella" @click="deleteForm">
           </div>
       </div>
 
@@ -121,7 +123,7 @@
       <div v-if="writeSuccessful">
         <span>Grazie per aver compilato la richiesta.</span>
       </div>
-
+      </form>
     </section>
   </div>
 </template>
@@ -131,6 +133,7 @@
   export default {
     data() {
       return {
+        formErrore: false,
         writeSuccessful: false,
         error: false,
         messaggioErrore: '',
@@ -142,6 +145,20 @@
       }
     },
     methods: {
+      controllaEmail (email){
+        var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+      },
+      invalidateForm() {
+        this.formErrore = true;
+      },
+      deleteForm() {
+        this.nome = '';
+        this.cognome = '';
+        this.n_ordine = '';
+        this.email = '';
+        this.radio = null;
+      },
       async writeToFirestore() {
         
         if ((this.nome && this.cognome && this.n_ordine && this.email && this.motivo_rimborso) != '') {
@@ -174,3 +191,11 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+form.formErrore {
+  :invalid {
+    outline: 2px solid red;
+  }
+}
+</style>
