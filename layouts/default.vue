@@ -64,8 +64,13 @@ export default {
         },
         {
           title: 'Rimborsi',
-          icon: 'lightbulb',
+          icon: 'pencil',
           to: { name: 'rimborsi' }
+        },
+        {
+          title: 'Leggi rimborsi',
+          icon: 'glasses',
+          to: { name: 'leggi_rimborsi' }
         }
       ]
     }

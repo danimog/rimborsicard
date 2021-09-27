@@ -3,7 +3,7 @@
     <section class="section">
       <h2 class="title is-3 has-text-grey">
         "Richiedi il rimborso  <b-icon
-          icon="rocket"
+          icon="pencil"
           size="is-large"
         />"
       </h2>
@@ -15,6 +15,12 @@
     </section>
 
     <section class="sezione-rimborsi">
+      <div class="mb-5 has-text-centered">
+        <b-message title="AVVISO" type="is-danger" has-icon aria-close-label="Close message">
+            Si ricorda che non è dovuto alcun rimborso in caso di smarrimento, danneggiamento, distruzione della Card e in ogni altro caso dipendente da fatto proprio dell’utente
+        </b-message>    
+      </div>
+      
       <form :class="this.formErrore ? 'formErrore' : false">
 
       <div class="field is-horizontal">
@@ -139,9 +145,9 @@
         messaggioErrore: '',
         radio: '',
         nome: '',
-            cognome: '',
-            email: '',
-            n_ordine: ''
+        cognome: '',
+        email: '',
+        n_ordine: ''
       }
     },
     methods: {
@@ -159,8 +165,8 @@
         this.email = '';
         this.radio = null;
       },
-      async writeToFirestore() {
-        
+      async writeToFirestore(evt) {
+        evt.preventDefault();
         if ((this.nome && this.cognome && this.n_ordine && this.email && this.motivo_rimborso) != '') {
           this.error = false;
           this.messaggioErrore = '';
@@ -176,16 +182,12 @@
             alert("Segnalazione inserita con successo!");
             this.writeSuccessful = true;
           }
+          
         }
         else{
           this.error = true;
           this.messaggioErrore = 'Compila tutti i campi!';
         }
-        // try {
-        //   await ref.set(document)
-        // } catch (e) {
-        //   console.error(e)
-        // }
         
       }
     }

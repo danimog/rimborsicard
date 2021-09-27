@@ -1,43 +1,21 @@
 <template>
   <section class="section">
     <div>
-      <h1>Benvenuto!</h1>
+      <h1 class="title is-1 mb-5">Benvenuto!</h1>
     </div>
     <div class="columns is-mobile">
-      <card
-        title="Free"
-        icon="github"
-      >
-        Open source on <a href="https://github.com/buefy/buefy">
-          GitHub
-        </a>
-      </card>
+        <card
+          title="Chiedi il rimborso"
+          icon="pencil"
+        >
+      <NuxtLink to="rimborsi">Modulo per la richiesta rimborso delle Cinque Terre Card</NuxtLink>
 
+        </card>
       <card
-        title="Responsive"
-        icon="cellphone-link"
+        title="Leggi i rimborsi"
+        icon="glasses"
       >
-        <b class="has-text-grey">
-          Every
-        </b> component is responsive
-      </card>
-
-      <card
-        title="Modern"
-        icon="alert-decagram"
-      >
-        Built with <a href="https://vuejs.org/">
-          Vue.js
-        </a> and <a href="http://bulma.io/">
-          Bulma
-        </a>
-      </card>
-
-      <card
-        title="Lightweight"
-        icon="arrange-bring-to-front"
-      >
-        No other internal dependency
+      <NuxtLink to="leggi_rimborsi">Le richieste di rimborso compilate dagli utenti</NuxtLink>
       </card>
     </div>
   </section>
