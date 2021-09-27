@@ -6,7 +6,13 @@
             size="is-large"
             />"
         </h2>
-        <b-table :data="richieste" :columns="columns" :debounce-search="1000"></b-table>
+        <b-table 
+            :data="richieste" 
+            :columns="columns" 
+            :debounce-search="1000"
+            :paginated="true"
+            :per-page="25"
+        ></b-table>
        
     </div>
 </template>
