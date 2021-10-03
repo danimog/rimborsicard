@@ -1,29 +1,40 @@
 <template>
     <div class="container mt-5">
-        <h2 class="title is-3 has-text-grey">
-            "Leggi i rimborsi inviati  <b-icon
-            icon="glasses"
-            size="is-large"
-            />"
-        </h2>
-        <b-table 
-            :data="richieste" 
-            :columns="columns" 
-            :debounce-search="1000"
-            :paginated="true"
-            :per-page="25"
-        ></b-table>
-       
+        <div v-if="authenticatedUser">
+            ciao, {{authenticatedUser.email}}
+            <h2 class="title is-3 has-text-grey">
+                "Leggi i rimborsi inviati  <b-icon
+                icon="glasses"
+                size="is-large"
+                />"
+            </h2>
+            <b-table 
+                :data="richieste" 
+                :columns="columns" 
+                :debounce-search="1000"
+                :paginated="true"
+                :per-page="25"
+            ></b-table>
+        </div>
+        <div v-else class="mt-5 mb-5 text-center">
+            <NuxtLink to="/login">
+                <p class="h3">
+                    Per accedere devi essere loggato! 
+                </p>
+            </NuxtLink>
+        </div>        
     </div>
 </template>
 
 <script>
 import {fireDb} from '~/plugins/firebase.js'
+import firebase from 'firebase/compat/app'
 
     export default {
         data() {
             return {
                 richieste: [],
+                authenticatedUser: '',
                 nome: '',
                 cognome: '',
                 email: '',
@@ -64,7 +75,9 @@ import {fireDb} from '~/plugins/firebase.js'
                 ]
             }
         },
-
+        created(){
+            firebase.auth().onAuthStateChanged(user => (this.authenticatedUser = user))
+        },
         mounted(){
           fireDb.collection("richieste").orderBy('cognome', 'asc').get().then((querySnapshot) => {
               this.richieste = querySnapshot.docs.map(doc =>

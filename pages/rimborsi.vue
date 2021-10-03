@@ -30,7 +30,7 @@
             <p class="control is-expanded has-icons-left">
               <input class="input" type="text" placeholder="Nome" v-model="nome" required @invalid="invalidateForm">
               <b-icon
-                icon="apps"
+                icon="account"
               />&nbsp; 
             </p>
           </div>
@@ -40,7 +40,7 @@
               <input class="input" type="text" placeholder="Cognome" v-model="cognome" required @invalid="invalidateForm">
               <span class="icon is-small is-left">
                 <b-icon
-                icon="apps"
+                icon="account"
               />&nbsp;
               </span>
             </p>
@@ -56,7 +56,7 @@
               <input class="input" type="text" placeholder="numero ordine" v-model="n_ordine" required @invalid="invalidateForm">
               <span class="icon is-small is-left">
                 <b-icon
-                icon="filter"
+                icon="counter"
               />&nbsp;
               </span>
             </p>

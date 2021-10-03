@@ -39,7 +39,24 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/buefy
     'nuxt-buefy',
+    '@nuxtjs/i18n',
   ],
+
+  i18n: {
+    // locales: ['en', 'it'],
+    // defaultLocale: 'en',
+    // vueI18n: {
+    //   fallbackLocale: 'en',
+    //   messages: {
+    //     en: {
+    //       welcome: 'Welcome'
+    //     },
+    //     it: {
+    //       welcome: 'Benvenuto'
+    //     },
+    //   }
+    // }
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -52,6 +69,16 @@ export default {
       },
     },
 
+  },
+  // router: {
+  //   middleware: 'router-auth'
+  // },
+  services: {
+    auth: true,
+    firestore: true,
+    functions: true,
+    storage: true,
+    database: true,
   }
 
 }

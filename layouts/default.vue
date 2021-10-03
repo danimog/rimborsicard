@@ -28,8 +28,13 @@
     <section class="main-content columns">
       <aside class="column is-2 section">
         <p class="menu-label is-hidden-touch">
-          General
+          Menu
         </p>
+        <div>  
+            <b-button @click="logout" type="is-danger is-light" class="buttons mt-5 mb-5" v-if="authenticatedUser" size="is-small" icon-left="logout">
+                Logout
+            </b-button>
+        </div>
         <ul class="menu-list">
           <li
             v-for="(item, key) of items"
@@ -53,6 +58,8 @@
 </template>
 
 <script>
+import firebase from 'firebase/compat/app'
+
 export default {
   data () {
     return {
@@ -63,18 +70,32 @@ export default {
           to: { name: 'index' }
         },
         {
-          title: 'Rimborsi',
+          title: 'Inserisci',
           icon: 'pencil',
           to: { name: 'rimborsi' }
         },
         {
-          title: 'Leggi rimborsi',
+          title: 'Leggi',
           icon: 'glasses',
           to: { name: 'leggi_rimborsi' }
         }
-      ]
+      ],
+      authenticatedUser:'',
     }
-  }
+  },
+  created(){
+    firebase.auth().onAuthStateChanged(user => (this.authenticatedUser = user))
+  },
+
+  methods:{
+    logout(){
+        firebase.auth().signOut().then(() => {
+            this.$router.push('/')
+        })
+    },
+  },
+
+
 }
 </script>
 
