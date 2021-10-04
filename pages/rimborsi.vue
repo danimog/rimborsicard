@@ -108,6 +108,12 @@
             </b-radio>
           </b-field>
         </div>
+        <div class="block">
+          <label class="checkbox">
+            <input type="checkbox" v-model="gdpragree">
+            Acconsento all'utilizzo dei miei dati così come previsto dall'art. 13 del Regolamento Europeo UE 2016/679 
+          </label>
+        </div>
         <p class="content">
             <b>Selezione:</b>
             {{ radio }}
@@ -147,7 +153,8 @@
         nome: '',
         cognome: '',
         email: '',
-        n_ordine: ''
+        n_ordine: '',
+        gdpragree: false,
       }
     },
     methods: {
@@ -163,31 +170,40 @@
         this.cognome = '';
         this.n_ordine = '';
         this.email = '';
+        this.gdpragree = false;
         this.radio = null;
       },
       async writeToFirestore(evt) {
         evt.preventDefault();
-        if ((this.nome && this.cognome && this.n_ordine && this.email && this.motivo_rimborso) != '') {
-          this.error = false;
-          this.messaggioErrore = '';
-          let insertok = await fireDb.collection("richieste").add({
-              motivo_rimborso: this.radio,
-              nome: this.nome,
-              cognome: this.cognome,
-              email: this.email,
-              n_ordine: this.n_ordine
-          });
 
-          if (insertok){
-            alert("Segnalazione inserita con successo!");
-            this.writeSuccessful = true;
+        if (this.gdpragree){
+          if ((this.nome && this.cognome && this.n_ordine && this.email && this.motivo_rimborso) != '') {
+            this.error = false;
+            this.messaggioErrore = '';
+            let insertok = await fireDb.collection("richieste").add({
+                motivo_rimborso: this.radio,
+                nome: this.nome,
+                cognome: this.cognome,
+                email: this.email,
+                n_ordine: this.n_ordine
+            });
+
+            if (insertok){
+              alert("Segnalazione inserita con successo!");
+              this.writeSuccessful = true;
+            }
+            
           }
-          
+          else{
+            this.error = true;
+            this.messaggioErrore = 'Compila tutti i campi!';
+          }
         }
         else{
-          this.error = true;
-          this.messaggioErrore = 'Compila tutti i campi!';
+            this.error = true;
+            this.messaggioErrore = 'Acconsenti al trattamento dei dati prima di procedere...';
         }
+        
         
       }
     }
